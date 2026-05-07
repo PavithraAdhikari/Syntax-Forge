@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Syntax Forge — Code. Learn. Level Up.</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --mint: #a8edcc;
+    --peach: #ffd6b0;
+    --lavender: #c9b8f5;
+    --sky: #b3e5fc;
+    --rose: #f9c4d2;
+    --yellow: #fff3b0;
+    --bg: #f0f4ff;
+    --card: rgba(255,255,255,0.55);
+    --text: #2d2d4e;
+    --subtext: #6b6b8a;
+    --border: rgba(255,255,255,0.7);
+    --shadow: 0 8px 32px rgba(120,100,200,0.13);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Animated blobs background */
+  .bg-blobs {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.45;
+    animation: blobFloat 8s ease-in-out infinite;
+  }
+  .blob1 { width: 420px; height: 420px; background: var(--lavender); top: -100px; left: -80px; animation-delay: 0s; }
+  .blob2 { width: 350px; height: 350px; background: var(--mint); top: 30%; right: -60px; animation-delay: 2s; }
+  .blob3 { width: 300px; height: 300px; background: var(--peach); bottom: -60px; left: 30%; animation-delay: 4s; }
+  .blob4 { width: 250px; height: 250px; background: var(--sky); top: 60%; left: 10%; animation-delay: 1s; }
+  .blob5 { width: 200px; height: 200px; background: var(--rose); top: 10%; right: 25%; animation-delay: 3s; }
+
+  @keyframes blobFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(20px, -20px) scale(1.05); }
+    66% { transform: translate(-15px, 15px) scale(0.97); }
+  }
+
+  /* Floating particles */
+  .particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+  .particle {
+    position: absolute;
+    font-size: 1.4rem;
+    animation: particleFloat linear infinite;
+    opacity: 0.18;
+  }
+  @keyframes particleFloat {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.18; }
+    90% { opacity: 0.18; }
+    100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+  }
+
+  /* Nav */
+  nav {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(255,255,255,0.4);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.8rem;
+    background: linear-gradient(135deg, #9b59b6, #3498db, #1abc9c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 1px;
+  }
+  .nav-links { display: flex; gap: 1rem; align-items: center; }
+  .btn-nav {
+    padding: 0.55rem 1.4rem;
+    border-radius: 50px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border: none;
+    transition: all 0.25s;
+  }
+  .btn-login {
+    background: rgba(255,255,255,0.6);
+    color: var(--text);
+    border: 2px solid rgba(155,89,182,0.25);
+  }
+  .btn-login:hover { background: rgba(155,89,182,0.12); transform: translateY(-2px); }
+  .btn-register {
+    background: linear-gradient(135deg, #a78bfa, #60a5fa);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(167,139,250,0.4);
+  }
+  .btn-register:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(167,139,250,0.5); }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 5rem 2rem 3rem;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 0.4rem 1.2rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--subtext);
+    margin-bottom: 1.5rem;
+    animation: fadeSlideDown 0.6s ease both;
+  }
+
+  .hero h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    animation: fadeSlideDown 0.7s ease 0.1s both;
+  }
+  .hero h1 span.grad {
+    background: linear-gradient(135deg, #9b59b6 0%, #3498db 50%, #1abc9c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+    color: var(--subtext);
+    max-width: 540px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    font-weight: 600;
+    animation: fadeSlideDown 0.7s ease 0.2s both;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeSlideDown 0.7s ease 0.3s both;
+  }
+
+  .btn-cta-main {
+    padding: 0.9rem 2.4rem;
+    border-radius: 50px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border: none;
+    background: linear-gradient(135deg, #a78bfa, #60a5fa, #34d399);
+    color: #fff;
+    box-shadow: 0 6px 25px rgba(167,139,250,0.45);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-cta-main::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .btn-cta-main:hover { transform: translateY(-4px) scale(1.03); box-shadow: 0 12px 35px rgba(167,139,250,0.55); }
+  .btn-cta-main:hover::after { opacity: 1; }
+
+  .btn-cta-sec {
+    padding: 0.9rem 2.4rem;
+    border-radius: 50px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    cursor: pointer;
+    background: rgba(255,255,255,0.6);
+    color: var(--text);
+    border: 2px solid rgba(167,139,250,0.3);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s;
+  }
+  .btn-cta-sec:hover { transform: translateY(-3px); background: rgba(255,255,255,0.85); }
+
+  /* Stats row */
+  .stats-row {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    padding: 0 2rem 3rem;
+    animation: fadeSlideDown 0.7s ease 0.4s both;
+  }
+  .stat-card {
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(14px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 1.2rem 2rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s;
+  }
+  .stat-card:hover { transform: translateY(-5px); }
+  .stat-card .num {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    background: linear-gradient(135deg, #9b59b6, #3498db);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .stat-card .lbl { font-size: 0.85rem; color: var(--subtext); font-weight: 700; margin-top: 0.2rem; }
+
+  /* Features */
+  .features {
+    position: relative;
+    z-index: 5;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto 4rem;
+    padding: 0 2rem;
+    animation: fadeSlideDown 0.7s ease 0.5s both;
+  }
+  .feature-card {
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(14px);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 1.8rem 1.5rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: default;
+  }
+  .feature-card:hover { transform: translateY(-8px) rotate(-0.5deg); box-shadow: 0 16px 40px rgba(120,100,200,0.18); }
+  .feature-icon { font-size: 2.2rem; margin-bottom: 0.8rem; display: block; }
+  .feature-card h3 { font-family: 'Fredoka One', cursive; font-size: 1.15rem; margin-bottom: 0.4rem; color: var(--text); }
+  .feature-card p { font-size: 0.88rem; color: var(--subtext); line-height: 1.6; font-weight: 600; }
+
+  /* Languages */
+  .lang-section {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    padding: 0 2rem 4rem;
+  }
+  .lang-section h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+  }
+  .lang-pills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+  }
+  .lang-pill {
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 0.5rem 1.3rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--text);
+    transition: all 0.25s;
+    cursor: default;
+  }
+  .lang-pill:hover { transform: translateY(-3px) scale(1.06); background: rgba(255,255,255,0.85); }
+
+  /* Modal overlay */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(45,45,78,0.35);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .modal-overlay.active { opacity: 1; pointer-events: all; }
+
+  .modal-box {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    padding: 2.5rem 2.5rem 2rem;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 24px 60px rgba(120,100,200,0.25);
+    transform: translateY(30px) scale(0.95);
+    transition: transform 0.3s;
+    position: relative;
+  }
+  .modal-overlay.active .modal-box { transform: translateY(0) scale(1); }
+
+  .modal-close {
+    position: absolute;
+    top: 1rem; right: 1.2rem;
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: var(--subtext);
+    line-height: 1;
+    transition: transform 0.2s;
+  }
+  .modal-close:hover { transform: rotate(90deg); }
+
+  .modal-icon { font-size: 3rem; text-align: center; margin-bottom: 0.5rem; }
+  .modal-box h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 0.3rem;
+    background: linear-gradient(135deg, #9b59b6, #3498db);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .modal-box .modal-sub {
+    text-align: center;
+    color: var(--subtext);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group { margin-bottom: 1rem; }
+  .form-group label {
+    display: block;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--subtext);
+    margin-bottom: 0.35rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .form-group input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 14px;
+    border: 2px solid rgba(167,139,250,0.2);
+    background: rgba(255,255,255,0.8);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+  .form-group input:focus {
+    border-color: #a78bfa;
+    box-shadow: 0 0 0 4px rgba(167,139,250,0.15);
+  }
+
+  .btn-submit {
+    width: 100%;
+    padding: 0.9rem;
+    border-radius: 50px;
+    border: none;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1.05rem;
+    cursor: pointer;
+    background: linear-gradient(135deg, #a78bfa, #60a5fa);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(167,139,250,0.4);
+    margin-top: 0.5rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(167,139,250,0.5); }
+  .btn-submit:active { transform: scale(0.98); }
+  .btn-submit.loading { opacity: 0.7; pointer-events: none; }
+
+  .modal-switch {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.88rem;
+    color: var(--subtext);
+    font-weight: 600;
+  }
+  .modal-switch a {
+    color: #a78bfa;
+    text-decoration: none;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .modal-switch a:hover { text-decoration: underline; }
+
+  .error-msg {
+    background: rgba(249,100,100,0.1);
+    border: 1px solid rgba(249,100,100,0.3);
+    border-radius: 10px;
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+    color: #c0392b;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    display: none;
+  }
+  .error-msg.show { display: block; }
+
+  @keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Footer */
+  footer {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    padding: 2rem;
+    color: var(--subtext);
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-top: 1px solid var(--border);
+    background: rgba(255,255,255,0.3);
+    backdrop-filter: blur(10px);
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-blobs">
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="blob blob3"></div>
+  <div class="blob blob4"></div>
+  <div class="blob blob5"></div>
+</div>
+
+<div class="particles" id="particles"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">⚡ Syntax Forge</div>
+  <div class="nav-links">
+    <button class="btn-nav btn-login" onclick="openModal('login')">Login</button>
+    <button class="btn-nav btn-register" onclick="openModal('register')">Register Free</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">🎮 Gamified Coding Platform &nbsp;·&nbsp; Level Up Every Day</div>
+  <h1>Code Smarter.<br><span class="grad">Level Up Faster.</span></h1>
+  <p>A next-gen compiler playground with real-time execution, AI explanations, and a leaderboard to keep you motivated.</p>
+  <div class="hero-cta">
+    <button class="btn-cta-main" onclick="openModal('register')">🚀 Start Coding Free</button>
+    <button class="btn-cta-sec" onclick="openModal('login')">I have an account</button>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-row">
+  <div class="stat-card"><div class="num">6+</div><div class="lbl">Languages</div></div>
+  <div class="stat-card"><div class="num">⚡</div><div class="lbl">Real-time Execution</div></div>
+  <div class="stat-card"><div class="num">🤖</div><div class="lbl">AI Explanations</div></div>
+  <div class="stat-card"><div class="num">🏆</div><div class="lbl">Live Leaderboard</div></div>
+</div>
+
+<!-- FEATURES -->
+<div class="features">
+  <div class="feature-card">
+    <span class="feature-icon">⚙️</span>
+    <h3>Smart Compiler</h3>
+    <p>Syntax check before running. Get clear error messages instantly.</p>
+  </div>
+  <div class="feature-card">
+    <span class="feature-icon">▶️</span>
+    <h3>Live Execution</h3>
+    <p>Run code interactively with real stdin support via WebSocket.</p>
+  </div>
+  <div class="feature-card">
+    <span class="feature-icon">💡</span>
+    <h3>AI Explain</h3>
+    <p>Groq-powered line-by-line explanation of any code, instantly.</p>
+  </div>
+  <div class="feature-card">
+    <span class="feature-icon">🏆</span>
+    <h3>Leaderboard</h3>
+    <p>Compete with other coders. Every run earns you points.</p>
+  </div>
+  <div class="feature-card">
+    <span class="feature-icon">📜</span>
+    <h3>Run History</h3>
+    <p>Every session saved. Revisit your past programs anytime.</p>
+  </div>
+  <div class="feature-card">
+    <span class="feature-icon">🎨</span>
+    <h3>Custom Themes</h3>
+    <p>6 beautiful themes. Light & dark mode. Make it yours.</p>
+  </div>
+</div>
+
+<!-- LANGUAGES -->
+<div class="lang-section">
+  <h2>🌐 Supported Languages</h2>
+  <div class="lang-pills">
+    <div class="lang-pill">🐍 Python</div>
+    <div class="lang-pill">☕ Java</div>
+    <div class="lang-pill">⚡ C++</div>
+    <div class="lang-pill">🔵 C</div>
+    <div class="lang-pill">🟨 JavaScript</div>
+    <div class="lang-pill">🗄️ SQL</div>
+  </div>
+</div>
+
+<footer>Made with 💜 by Syntax Forge · <a href="#" style="color:#a78bfa;text-decoration:none" onclick="openModal('register')">Join for free →</a></footer>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="loginOverlay">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('login')">✕</button>
+    <div class="modal-icon">🔑</div>
+    <h2>Welcome Back!</h2>
+    <p class="modal-sub">Login to your Syntax Forge account</p>
+    <div class="error-msg" id="loginError"></div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="loginEmail" placeholder="you@example.com">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="loginPassword" placeholder="••••••••">
+    </div>
+    <button class="btn-submit" id="loginBtn" onclick="doLogin()">Login →</button>
+    <div class="modal-switch">Don't have an account? <a onclick="switchModal('login','register')">Register free</a></div>
+  </div>
+</div>
+
+<!-- REGISTER MODAL -->
+<div class="modal-overlay" id="registerOverlay">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('register')">✕</button>
+    <div class="modal-icon">🚀</div>
+    <h2>Join Syntax Forge</h2>
+    <p class="modal-sub">Create your free account and start coding</p>
+    <div class="error-msg" id="registerError"></div>
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" id="regName" placeholder="CoolCoder123">
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="regEmail" placeholder="you@example.com">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="regPassword" placeholder="At least 6 characters">
+    </div>
+    <button class="btn-submit" id="registerBtn" onclick="doRegister()">Create Account 🎉</button>
+    <div class="modal-switch">Already have an account? <a onclick="switchModal('register','login')">Login</a></div>
+  </div>
+</div>
+
+<!-- Firebase -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, getDoc }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCZAQdUW7kpj71qYz4FQhTenVO9gKNIUfI",
+    authDomain: "syntax-forge.firebaseapp.com",
+    projectId: "syntax-forge",
+    storageBucket: "syntax-forge.firebasestorage.app",
+    messagingSenderId: "964194161766",
+    appId: "1:964194161766:web:642a19d2ef9131f783c9a7"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  window._auth = auth;
+  window._db = db;
+  window._fbDoc = doc;
+  window._fbSetDoc = setDoc;
+  window._fbGetDoc = getDoc;
+  window._fbCreateUser = createUserWithEmailAndPassword;
+  window._fbSignIn = signInWithEmailAndPassword;
+
+  onAuthStateChanged(auth, (user) => {
+    // Only auto-redirect if we're not in the middle of registering/logging in
+    // The doRegister and doLogin functions handle their own redirects
+    if (user && !window._handlingAuth) {
+      window.location.href = "compiler.html";
+    }
+  });
+</script>
+
+<script>
+// Particles
+const emojis = ["💻","⚡","🔥","✨","🎯","🚀","💡","🎮","⭐","🏆","🐍","☕"];
+const container = document.getElementById("particles");
+for (let i = 0; i < 18; i++) {
+  const p = document.createElement("div");
+  p.className = "particle";
+  p.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+  p.style.left = Math.random() * 100 + "vw";
+  p.style.animationDuration = (10 + Math.random() * 15) + "s";
+  p.style.animationDelay = (Math.random() * 12) + "s";
+  p.style.fontSize = (1 + Math.random() * 1.2) + "rem";
+  container.appendChild(p);
+}
+
+function openModal(type) {
+  document.getElementById(type + "Overlay").classList.add("active");
+}
+function closeModal(type) {
+  document.getElementById(type + "Overlay").classList.remove("active");
+  clearErrors();
+}
+function switchModal(from, to) {
+  closeModal(from);
+  setTimeout(() => openModal(to), 200);
+}
+function clearErrors() {
+  document.querySelectorAll(".error-msg").forEach(e => { e.classList.remove("show"); e.innerText = ""; });
+}
+function showError(id, msg) {
+  const el = document.getElementById(id);
+  el.innerText = msg;
+  el.classList.add("show");
+}
+
+// Close on overlay click
+document.querySelectorAll(".modal-overlay").forEach(overlay => {
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) {
+      overlay.classList.remove("active");
+      clearErrors();
+    }
+  });
+});
+
+// Enter key support
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    document.querySelectorAll(".modal-overlay").forEach(o => o.classList.remove("active"));
+  }
+});
+
+async function doRegister() {
+  const name = document.getElementById("regName").value.trim();
+  const email = document.getElementById("regEmail").value.trim();
+  const password = document.getElementById("regPassword").value;
+  clearErrors();
+
+  if (!name || !email || !password) return showError("registerError", "Please fill in all fields.");
+  if (password.length < 6) return showError("registerError", "Password must be at least 6 characters.");
+
+  const btn = document.getElementById("registerBtn");
+  btn.classList.add("loading");
+  btn.innerText = "Creating account...";
+
+  // Prevent onAuthStateChanged from redirecting before we save the user doc
+  window._handlingAuth = true;
+
+  try {
+    const cred = await window._fbCreateUser(window._auth, email, password);
+
+    // Save user profile FIRST, then redirect
+    await window._fbSetDoc(window._fbDoc(window._db, "users", cred.user.uid), {
+      username: name,
+      email: email,
+      points: 0,
+      runs: 0,
+      createdAt: new Date().toISOString()
+    });
+
+    sessionStorage.setItem("sf_username", name);
+    sessionStorage.setItem("sf_uid", cred.user.uid);
+
+    // Now safe to redirect
+    window._handlingAuth = false;
+    window.location.href = "compiler.html";
+  } catch (e) {
+    window._handlingAuth = false;
+    btn.classList.remove("loading");
+    btn.innerText = "Create Account 🎉";
+    showError("registerError", e.message.replace("Firebase: ", "").replace(/\(.*\)/, "").trim());
+  }
+}
+
+async function doLogin() {
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value;
+  clearErrors();
+
+  if (!email || !password) return showError("loginError", "Please enter email and password.");
+
+  const btn = document.getElementById("loginBtn");
+  btn.classList.add("loading");
+  btn.innerText = "Logging in...";
+
+  try {
+    const cred = await window._fbSignIn(window._auth, email, password);
+    const snap = await window._fbGetDoc(window._fbDoc(window._db, "users", cred.user.uid));
+    const username = snap.exists() ? snap.data().username : email.split("@")[0];
+    sessionStorage.setItem("sf_username", username);
+    sessionStorage.setItem("sf_uid", cred.user.uid);
+    window.location.href = "compiler.html";
+  } catch (e) {
+    btn.classList.remove("loading");
+    btn.innerText = "Login →";
+    showError("loginError", "Invalid email or password.");
+  }
+}
+</script>
+</body>
+</html>

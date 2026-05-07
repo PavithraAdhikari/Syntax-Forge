@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Code Learning Platform</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://unpkg.com/monaco-editor@0.44.0/min/vs/loader.js"></script>
+</head>
+
+<body>
+
+<header>
+
+<h2>Code Learning Platform</h2>
+
+<div class="header-controls">
+
+<button onclick="toggleTheme()">Theme</button>
+
+<button onclick="showLogin()">Login</button>
+
+<button onclick="showRegister()">Register</button>
+
+</div>
+
+</header>
+
+
+<div class="container">
+
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+<h3>Menu</h3>
+
+<ul>
+
+<li onclick="showSection('compiler')">Compiler</li>
+<li onclick="showSection('problems')">Problems</li>
+<li onclick="showSection('leaderboard')">Leaderboard</li>
+<li onclick="showSection('history')">History</li>
+
+</ul>
+
+</div>
+
+
+<!-- Main Content -->
+
+<div class="main">
+
+
+<!-- COMPILER -->
+
+<div id="compiler" class="section">
+
+<h2>Online Compiler</h2>
+
+<select id="language">
+
+<option value="c">C</option>
+<option value="cpp">C++</option>
+<option value="java">Java</option>
+<option value="python">Python</option>
+<option value="javascript">JavaScript</option>
+
+</select>
+
+<div id="editor"></div>
+
+
+<h3>Program Input</h3>
+
+<textarea id="input"></textarea>
+
+
+<div class="buttons">
+
+<button onclick="compileCode()">Compile</button>
+
+<button onclick="runCode()">Run</button>
+
+</div>
+
+
+<h3>Output</h3>
+
+<pre id="output"></pre>
+
+</div>
+
+
+<!-- PROBLEMS -->
+
+<div id="problems" class="section hidden">
+
+<h2>Problem List</h2>
+
+<ul id="problemList">
+
+<li onclick="loadProblem(1)">Two Sum</li>
+<li onclick="loadProblem(2)">Palindrome Check</li>
+<li onclick="loadProblem(3)">Reverse String</li>
+
+</ul>
+
+<div id="problemDescription"></div>
+
+</div>
+
+
+<!-- LEADERBOARD -->
+
+<div id="leaderboard" class="section hidden">
+
+<h2>Leaderboard</h2>
+
+<table id="leaderboardTable">
+
+<tr>
+<th>Rank</th>
+<th>User</th>
+<th>Points</th>
+</tr>
+
+</table>
+
+</div>
+
+
+<!-- HISTORY -->
+
+<div id="history" class="section hidden">
+
+<h2>User History</h2>
+
+<ul id="historyList"></ul>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- LOGIN MODAL -->
+
+<div id="loginModal" class="modal hidden">
+
+<h3>Login</h3>
+
+<input id="loginEmail" placeholder="Email">
+<input id="loginPassword" type="password" placeholder="Password">
+
+<button onclick="login()">Login</button>
+
+</div>
+
+
+<!-- REGISTER MODAL -->
+
+<div id="registerModal" class="modal hidden">
+
+<h3>Register</h3>
+
+<input id="regName" placeholder="Username">
+<input id="regEmail" placeholder="Email">
+<input id="regPassword" type="password" placeholder="Password">
+
+<button onclick="register()">Register</button>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,1 @@
+const WebSocket=require("ws"); const ws=new WebSocket("ws://localhost:5000"); ws.on("open",()=>{console.log("open"); ws.send(JSON.stringify({type:"start",language:"python",code:"print(\"hello\")"}));}); ws.on("message",m=>console.log("msg",m.toString())); ws.on("close",()=>console.log("close")); ws.on("error",e=>console.error("err",e)); setTimeout(()=>ws.close(),7000);

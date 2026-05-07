@@ -1,0 +1,53 @@
+### PYTHON
+POST http://localhost:5000/run
+Content-Type: application/json
+
+{
+ "language": "python",
+ "code": "print('Hello Python')"
+}
+
+### JAVASCRIPT
+POST http://localhost:5000/run
+Content-Type: application/json
+
+{
+ "language": "javascript",
+ "code": "console.log('Hello JS')"
+}
+
+### JAVA
+POST http://localhost:5000/run
+Content-Type: application/json
+
+{
+ "language": "java",
+ "code": "public class Main{public static void main(String[] args){System.out.println(\"Hello Java\");}}"
+}
+
+### C
+POST http://localhost:5000/run
+Content-Type: application/json
+
+{
+ "language": "c",
+ "code": "#include<stdio.h>\nint main(){printf(\"Hello C\");}"
+}
+
+### CPP
+POST http://localhost:5000/run
+Content-Type: application/json
+
+{
+ "language": "cpp",
+ "code": "#include<iostream>\nusing namespace std; int main(){cout<<\"Hello CPP\";}"
+}
+
+### SQL
+POST http://localhost:5000/run
+Content-Type: application/json
+
+{
+ "language": "sql",
+ "code": "CREATE TABLE test(id INT);\nINSERT INTO test VALUES(1);\nSELECT * FROM test;"
+}
