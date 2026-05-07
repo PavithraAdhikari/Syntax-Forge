@@ -239,7 +239,6 @@ function spawnProcess(runCmd, ws, onProcess) {
   const proc = spawn(runCmd.command, runCmd.args, {
     stdio: "pipe",
     shell: runCmd.shell !== undefined ? runCmd.shell : true
-    env: { ...process.env, NODE_OPTIONS: "--max-old-space-size=128" }
   });
 
   onProcess(proc);
