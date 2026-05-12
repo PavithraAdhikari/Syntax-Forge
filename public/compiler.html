@@ -986,7 +986,7 @@ async function compileCode() {
       fetch("/compile",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({language,code})}),
       fetch("https://api.groq.com/openai/v1/chat/completions",{
         method:"POST",
-        headers:{"Content-Type":"application/json","Authorization":"Bearer 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"},
+        headers:{"Content-Type":"application/json","Authorization":"Bearer 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"},
         body:JSON.stringify({model:"llama-3.1-8b-instant",max_tokens:60,
           messages:[{role:"user",content:`Rate this ${language} code quality 0-10. Return ONLY raw JSON no markdown: {"score":7.5}\nCode:\n${code}`}]})
       })
@@ -1078,7 +1078,7 @@ async function optimizeCode() {
   try {
     const res=await fetch("https://api.groq.com/openai/v1/chat/completions",{
       method:"POST",
-      headers:{"Content-Type":"application/json","Authorization":"Bearer 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"},
+      headers:{"Content-Type":"application/json","Authorization":"Bearer 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"},
       body:JSON.stringify({
         model:"llama-3.3-70b-versatile",max_tokens:2000,
         messages:[{role:"user",content:`You are a code optimizer. Even if the code is already good, always return this exact JSON with NO markdown:
@@ -1097,7 +1097,7 @@ async function optimizeCode() {
     try{
       const sRes=await fetch("https://api.groq.com/openai/v1/chat/completions",{
         method:"POST",
-        headers:{"Content-Type":"application/json","Authorization":"Bearer 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"},
+        headers:{"Content-Type":"application/json","Authorization":"Bearer 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"},
         body:JSON.stringify({model:"llama-3.1-8b-instant",max_tokens:60,
           messages:[{role:"user",content:`Rate this optimized ${language} code quality 0-10. Return ONLY raw JSON: {"score":8.5}\nCode:\n${result.optimizedCode}`}]})
       });
@@ -1445,7 +1445,7 @@ async function startVisualization(code,language){
   try{
     const res=await fetch("https://api.groq.com/openai/v1/chat/completions",{
       method:"POST",
-      headers:{"Content-Type":"application/json","Authorization":"Bearer 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"},
+      headers:{"Content-Type":"application/json","Authorization":"Bearer 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"},
       body:JSON.stringify({model:"llama-3.3-70b-versatile",max_tokens:2000,messages:[{role:"user",
         content:`Analyze this ${language} code and generate a step-by-step visualization. Maximum 6 steps only. Use at most 5 array elements.
         CODE:\n${code.slice(0,600)}\n
